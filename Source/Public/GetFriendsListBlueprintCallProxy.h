@@ -13,23 +13,7 @@
 
 
 
-struct FOnlineSubsystemTestBPCallHelperr
-{
-public:
-	FOnlineSubsystemTestBPCallHelperr(const TCHAR* CallFunctionContext, UWorld* World, FName SystemName = NAME_None);
 
-	void QueryIDFromPlayerControllerTest(APlayerController* PlayerController);
-
-	bool IsValid() const
-	{
-		return UserID.IsValid() && (OnlineSub != nullptr);
-	}
-
-public:
-	TSharedPtr<class FUniqueNetId> UserID;
-	IOnlineSubsystem* const OnlineSub;
-	const TCHAR* FunctionContext;
-};
 
 USTRUCT(BlueprintType)
 struct FBlueprintFriend
