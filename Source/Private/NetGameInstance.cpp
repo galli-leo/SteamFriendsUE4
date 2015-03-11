@@ -9,6 +9,7 @@ UNetGameInstance::UNetGameInstance(const FObjectInitializer& ObjectInitializer)
 	, Delegate(FOnJoinSessionCompleteDelegate::CreateUObject(this, &ThisClass::OnCompleted))
 {
 	FString test = "";
+	
 }
 
 void UNetGameInstance::OnSessionUserInviteAccepted(const bool bWasSuccesful, const int32 ControllerId, TSharedPtr<FUniqueNetId> UserId, const FOnlineSessionSearchResult &InviteResult)
@@ -33,6 +34,22 @@ void UNetGameInstance::OnSessionUserInviteAccepted(const bool bWasSuccesful, con
 	}
 }
 
+void UCCGameInstance::Init()
+ {
+     IOnlineSubsystem* OnlineSub = IOnlineSubsystem::Get();
+     if (OnlineSub)
+     {
+         IOnlineSessionPtr SessionInt = OnlineSub->GetSessionInterface();
+         if (SessionInt.IsValid())
+         {
+             int32 ControllerId = 0;
+             if (ControllerId != 255)
+             {
+                 SessionInt->AddOnSessionInviteAcceptedDelegate(ControllerId, OnSessionUserInviteAccepted);
+             }
+         }
+     }
+ }
 
 void UNetGameInstance::SessionInviteAccepted_Implementation(const FBlueprintSessionResult &InviteResult)
 {
